@@ -1,4 +1,6 @@
-﻿internal class Program
+﻿using System.Runtime.CompilerServices;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -8,49 +10,22 @@
         System.Diagnostics.Debug.Assert(Enumerable.SequenceEqual(
         mergeArrays(new int[]{1, 3, 5}, new int[]{-5, 3, 6, 7}),
         new int[]{-5, 1, 3, 3, 5, 6, 7}));
-        Console.ReadKey();
+
         //test 2
         System.Diagnostics.Debug.Assert(Enumerable.SequenceEqual(
         mergeArrays(new int[]{-5, 2, 5, 8, 10}, new int[]{1, 2, 5}),
         new int[]{-5, 1, 2, 2, 5, 5, 8, 10}));
-        Console.ReadKey();
-        Console.WriteLine("Passed first 2 tests");
-        Console.WriteLine("Please give the first list of numbers");
-        int[] array1 = collectArrays();
-        Console.WriteLine("Now give the second list of numbers");
-        int[] array2 = collectArrays();
-        int[] combinedArray = mergeArrays(array1, array2);
-        foreach(int num  in combinedArray)
-        {
-            Console.Write(num + " ");
-        }
-        Console.WriteLine();
 
-    }
+        // //test 3
+        System.Diagnostics.Debug.Assert(Enumerable.SequenceEqual(
+        recursiveMergedArrays(new int[]{6, 1, -5, 3, 5, 3, 7}),
+        new int[]{-5, 1, 3, 3, 5, 6, 7}));
+        //test 4
+        System.Diagnostics.Debug.Assert(Enumerable.SequenceEqual(
+        recursiveMergedArrays(new int[]{1, 10, -5, 2, 5, 2, 5, 8}),
+        new int[]{-5, 1, 2, 2, 5, 5, 8, 10}));
 
-    public static int[] collectArrays()
-    {
-        Random rand = new Random();
-        int arraySize = rand.Next(10);
-        int[] intArray = new int[5];
-        bool validAnswer = false;
-        int num;
-        for(int i = 0; i < intArray.Length; i++)
-        {
-            do
-            {
-                Console.WriteLine("Please input a number larger than the previous");
-                validAnswer = int.TryParse(Console.ReadLine(), out num);
-                if(i > 0 && num < intArray[i-1])
-                {
-                    Console.WriteLine("Please make sure to give the numbers from smallest to largest");
-                    validAnswer = false;
-                }
-            }
-            while(!validAnswer);
-            intArray[i] = num;
-        }
-        return intArray;
+        Console.WriteLine("Passed all four tests");
     }
 
     public static int[] mergeArrays(int[] a, int[] b)
@@ -73,5 +48,32 @@
             }
         }
         return mergedList;
+    }
+
+    public static int[] recursiveMergedArrays(int[] values)
+    {
+        int middle = values.Length / 2;
+        int[] firstHalf = new int[middle];
+        int[] secondHalf = new int[values.Length - middle];
+
+        for(int i = 0; i < values.Length - middle; i++)
+        {
+            if(i < middle)
+            {
+
+                firstHalf[i] = values[i];
+            }
+            secondHalf[i] = values[i + middle];
+        }
+
+        if(values.Length < 2)
+        {
+            return values;
+        }
+        else
+        {
+            return mergeArrays(recursiveMergedArrays(firstHalf), recursiveMergedArrays(secondHalf));
+        }
+        
     }
 }
