@@ -1,4 +1,11 @@
 ﻿using System.Runtime.CompilerServices;
+/**********************************
+* Name: Caleb Roskelley
+* CS 1415 Lab 2 MergeSort
+* Professor Lewellan
+* Due Date: 01/22/2025
+**********************************/
+
 
 internal class Program
 {
