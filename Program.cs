@@ -12,6 +12,9 @@
         {
             Console.Write(num + " ");
         }
+        System.Diagnostics.Debug.Assert(Enumerable.SequenceEqual)(
+        mergeArrays(new int[]{1, 3, 5}, new int[]{-5, 3, 6, 7}),
+        new int[]{-5, 1, 3, 3, 5, 6, 7});
 
     }
 
